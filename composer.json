@@ -1,0 +1,12 @@
+{
+    "name": "david/pec3",
+    "description": "This is the project for the PHP class",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Atomichavez",
+            "email": "dchavez0628@gmail.com"
+        }
+    ],
+    "require": {}
+}
