@@ -18,15 +18,6 @@ function fetchArticles($filePaths) {
     $dateFormatted = date('d/m/Y', $data->date);
     $imgurl = $data->image;
 
-    // Check if content needs to be trimmed
-    $contentArr = explode(' ', $content);
-    if(count($contentArr)>120){
-        $contentTrim = array_slice($contentArr, 0, 120);
-        $contentNew = implode(' ', $contentTrim);
-    } else {
-        $contentNew = $content;
-    }
-
     // Get the filename without extension
     $filename = pathinfo($filePath, PATHINFO_FILENAME);
 
@@ -34,7 +25,7 @@ function fetchArticles($filePaths) {
     $article = array(
       "filename" => $filename,
       "title" => $title,
-      "contentNew" => $contentNew,
+      "content" => $content,
       "dateFormatted" => $dateFormatted,
       "imgurl" => $imgurl
     );

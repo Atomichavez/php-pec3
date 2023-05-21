@@ -16,7 +16,7 @@ $article = reset($articles);
 
 //assigning data to variables
 $title = $article['title'];
-$content = $article['contentNew'];
+$content = $article['content'];
 $dateFormatted = $article['dateFormatted'];
 $imgurl = $article['imgurl'];
 

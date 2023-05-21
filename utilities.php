@@ -42,3 +42,16 @@ function sortAlphabeticDescending($articles) {
   });
   return $articles;
 }
+
+//Trimming content 120 words
+function trimContent(&$articles) {
+  foreach ($articles as &$article) {
+    $content = $article['content'];
+    $contentArr = explode(' ', $content);
+    if(count($contentArr)>120){
+        $contentTrim = array_slice($contentArr, 0, 120);
+        $article['content'] = implode(' ', $contentTrim);
+    }
+  }
+  return ($articles);
+}

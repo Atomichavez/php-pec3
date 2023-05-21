@@ -18,10 +18,13 @@
   //Run fetchArticles function
   $articles = fetchArticles($filePaths);
 
+  //Run trimming content function
+  $articles = trimContent($articles);
+
   // Default sort order is descending
   $sortOrder = 'date-desc';
 
-  // Check if query is active
+  // Check if sort order query is active
   if (isset($_GET['sortOrder'])) {
     $sortOrder = $_GET['sortOrder'];
   }
