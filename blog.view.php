@@ -14,13 +14,26 @@
     <option value="alpha-asc">Alphabetic Descending</option>
     <option value="alpha-desc">Alphabetic Ascending</option>
   </select>
+  <select id="lang">
+    <option value="" disabled selected hidden>Language</option>
+    <option value="es">Spanish</option>
+    <option value="en">English</option>
+  </select>
 
   <script>
-    document.getElementById('sortOrder').addEventListener('change', function() {
-    var selectedValue = this.value;
-    window.location.href = 'blog.php?sortOrder=' + encodeURIComponent(selectedValue);
-  });
+    function updateLocation() {
+      var sortOrder = document.getElementById('sortOrder').value;
+      var lang = document.getElementById('lang').value;
+      var href = 'blog.php?lang=' + encodeURIComponent(lang);
+      if(sortOrder) {
+        href += '&sortOrder=' + encodeURIComponent(sortOrder);
+      }
+      window.location.href = href;
+    }
+    document.getElementById('sortOrder').addEventListener('change', updateLocation);
+    document.getElementById('lang').addEventListener('change', updateLocation);
   </script>
+
 
   <?php foreach ($articles as $article) : ?>
     <h1><a href="post.php?article=<?php echo $article['filename']; ?>"><?php echo $article['title']; ?></a></h1>
