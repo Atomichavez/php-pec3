@@ -27,18 +27,29 @@ function sortDateDescending($articles) {
   return $articles;
 }
 
+//Getting the lang parameter from url
+function getLang() {
+  $lang = $_GET['lang'] ?? 'es';
+  if (!in_array($lang, ['es', 'en'])) {
+    $lang = 'es';
+  }
+  return ($lang);
+}
+
 //Rearranging array by alphabetic ascending
 function sortAlphabeticAscending($articles) {
-  usort($articles, function($a, $b) {
-    return strcmp($a["title"], $b["title"]);
+  $lang = getLang();
+  usort($articles, function($a, $b) use ($lang) {
+    return strcmp($a["title"][$lang], $b["title"][$lang]);
   });
   return $articles;
 }
 
 //Rearranging array by alphabetic descending
 function sortAlphabeticDescending($articles) {
-  usort($articles, function($a, $b) {
-    return strcmp($b["title"], $a["title"]);
+  $lang = getLang();
+  usort($articles, function($a, $b) use ($lang) {
+    return strcmp($b["title"][$lang], $a["title"][$lang]);
   });
   return $articles;
 }
@@ -46,12 +57,13 @@ function sortAlphabeticDescending($articles) {
 //Trimming content 120 words
 function trimContent(&$articles) {
   foreach ($articles as &$article) {
-    $content = $article['content'];
-    $contentArr = explode(' ', $content);
-    if(count($contentArr)>120){
+    foreach ($article['content'] as &$content) {
+      $contentArr = explode(' ', $content);
+      if (count($contentArr) > 120) {
         $contentTrim = array_slice($contentArr, 0, 120);
-        $article['content'] = implode(' ', $contentTrim);
+        $content = implode(' ', $contentTrim);
+      }
     }
   }
-  return ($articles);
+  return $articles;
 }

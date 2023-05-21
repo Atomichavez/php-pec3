@@ -7,21 +7,23 @@
   <title><?php echo $_GET['article']; ?></title>
 </head>
 <body>
+  <script>var baseHref = 'post.php';</script>
+  <script src="utilities.js"></script>
+  <?php include "nav.php"; ?>
+
   <select id="lang">
     <option value="es">Spanish</option>
     <option value="en">English</option>
   </select>
 
-  <script>
-    document.getElementById('lang').addEventListener('change', function() {
-    var selectedValue = this.value;
-    window.location.href = 'blog.php?sortOrder=' + encodeURIComponent(selectedValue);
-  });
-  </script>
+  <?php
+  require_once "utilities.php";
+  $lang = getLang();
+  ?>
 
-  <h1><?php echo $title; ?></h1>
+  <h1><?php echo $title[$lang]; ?></h1>
   <time datetime="<?php echo $dateFormatted; ?>"><?php echo $dateFormatted; ?></time>
-  <p><?php echo $content; ?></p>
+  <p><?php echo $content[$lang]; ?></p>
   <img src="<?php echo $imgurl; ?>" alt="news Image">
 </body>
 </html>

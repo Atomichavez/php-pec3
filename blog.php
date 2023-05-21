@@ -9,7 +9,7 @@
 <body>
   <?php
   //Require the necessary files
-  require "utilities.php";
+  require_once "utilities.php";
   require "fetching.php";
 
   // Get an array of file paths matching the pattern

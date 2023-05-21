@@ -1,6 +1,7 @@
 <?php
 //Require the fetching file
 require "fetching.php";
+require_once "utilities.php";
 
 //Getting the article name to fetch from url
 $filename = $_GET['article'];

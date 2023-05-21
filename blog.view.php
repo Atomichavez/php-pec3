@@ -7,8 +7,9 @@
   <title>Blog PHP</title>
 </head>
 <body>
-  <!-- Importing the updateLocation function that makes the select work -->
+  <script>var baseHref = 'blog.php';</script>
   <script src="utilities.js"></script>
+  <?php include "nav.php"; ?>
 
   <header>
     <select id="sortOrder">
@@ -24,10 +25,14 @@
     </select>
   </header>
 
-  <?php foreach ($articles as $article) : ?>
-    <h1><a href="post.php?article=<?php echo $article['filename']; ?>"><?php echo $article['title']; ?></a></h1>
+  <?php
+  require_once "utilities.php";
+  $lang = getLang();
+
+  foreach ($articles as $article) : ?>
+    <h1><a href="post.php?article=<?php echo $article['filename']; ?>"><?php echo $article['title'][$lang]; ?></a></h1>
     <time datetime="<?php echo $article['dateFormatted']; ?>"><?php echo $article['dateFormatted']; ?></time>
-    <p><?php echo $article['content']; ?></p>
+    <p><?php echo $article['content'][$lang]; ?></p>
     <img src="<?php echo $article['imgurl']; ?>" alt="news Image" width="500px">
     <hr>
   <?php endforeach; ?>

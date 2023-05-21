@@ -13,8 +13,10 @@ function fetchArticles($filePaths) {
     $data = json_decode($jsonData);
 
     // Access desired properties
-    $title = $data->title->es;
-    $content = $data->description->es;
+    $titleEs = $data->title->es;
+    $titleEn = $data->title->en;
+    $contentEs = $data->description->es;
+    $contentEn = $data->description->en;
     $dateFormatted = date('d/m/Y', $data->date);
     $imgurl = $data->image;
 
@@ -24,8 +26,8 @@ function fetchArticles($filePaths) {
     // Create an array representing the article
     $article = array(
       "filename" => $filename,
-      "title" => $title,
-      "content" => $content,
+      "title" => array("es" => $titleEs, "en" => $titleEn),
+      "content" => array("es" => $contentEs, "en" => $contentEn),
       "dateFormatted" => $dateFormatted,
       "imgurl" => $imgurl
     );
