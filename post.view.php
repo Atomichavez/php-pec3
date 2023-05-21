@@ -11,10 +11,12 @@
   <script src="utilities.js"></script>
   <?php include "nav.php"; ?>
 
-  <select id="lang">
-    <option value="es">Spanish</option>
-    <option value="en">English</option>
-  </select>
+  <header>
+    <select id="lang">
+      <option value="es">Spanish</option>
+      <option value="en">English</option>
+    </select>
+  </header>
 
   <?php
   require_once "utilities.php";
