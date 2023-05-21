@@ -7,78 +7,27 @@
   <title>Blog PHP</title>
 </head>
 <body>
-  <?php
-  // Get an array of file paths matching the pattern
-  $filePaths = glob('posts/*.json');
+  <select id="sortOrder">
+    <option value="" disabled selected hidden>Filter</option>
+    <option value="date-desc">Date Descending</option>
+    <option value="date-asc">Date Ascending</option>
+    <option value="alpha-asc">Alphabetic Descending</option>
+    <option value="alpha-desc">Alphabetic Ascending</option>
+  </select>
 
-  // Create an array to store the article data
-  $articles = array();
-
-  // Loop through each file
-  foreach ($filePaths as $filePath) {
-    // Read the JSON file contents
-    $jsonData = file_get_contents($filePath);
-
-    // Parse the JSON data
-    $data = json_decode($jsonData);
-
-    // Access desired properties
-    $title = $data->title->es;
-    $content = $data->description->es;
-    $dateFormatted = date('d/m/Y', $data->date);
-    $imgurl = $data->image;
-
-    // Check if content needs to be trimmed
-    $contentArr = explode(' ', $content);
-    if(count($contentArr)>120){
-        $contentTrim = array_slice($contentArr, 0, 120);
-        $contentNew = implode(' ', $contentTrim);
-    } else {
-        $contentNew = $content;
-    }
-
-    // Get the filename without extension
-    $filename = pathinfo($filePath, PATHINFO_FILENAME);
-
-    // Create an array representing the article
-    $article = array(
-      "filename" => $filename,
-      "title" => $title,
-      "contentNew" => $contentNew,
-      "dateFormatted" => $dateFormatted,
-      "imgurl" => $imgurl
-    );
-
-    // Add this article to the larger array
-    array_push($articles, $article);
-  }
-
-  //Rearranging array by date
-  usort($articles, function($a, $b) {
-    if ($a["dateFormatted"] == $b["dateFormatted"]) {
-      return 0;
-    } elseif ($a["dateFormatted"] < $b["dateFormatted"]) {
-      return -1;
-    } else {
-      return 1;
-    }
+  <script>
+    document.getElementById('sortOrder').addEventListener('change', function() {
+    var selectedValue = this.value;
+    window.location.href = 'blog.php?sortOrder=' + encodeURIComponent(selectedValue);
   });
+  </script>
 
-  //Looping through articles to display them
-  foreach ($articles as $article) {
-    $filename = $article["filename"];
-    $title = $article["title"];
-    $dateFormatted = $article["dateFormatted"];
-    $contentNew = $article["contentNew"];
-    $imgurl = $article["imgurl"];
-    ?>
-    <h1><a href="post.php?article=<?php echo $filename; ?>"><?php echo $title; ?></a></h1>
-    <time datetime="<?php echo $dateFormatted; ?>"><?php echo $dateFormatted; ?></time>
-    <p><?php echo $contentNew; ?></p>
-    <img src="<?php echo $imgurl; ?>" alt="news Image" width="500px">
+  <?php foreach ($articles as $article) : ?>
+    <h1><a href="post.php?article=<?php echo $article['filename']; ?>"><?php echo $article['title']; ?></a></h1>
+    <time datetime="<?php echo $article['dateFormatted']; ?>"><?php echo $article['dateFormatted']; ?></time>
+    <p><?php echo $article['contentNew']; ?></p>
+    <img src="<?php echo $article['imgurl']; ?>" alt="news Image" width="500px">
     <hr>
-  <?php
-  }
-  ?>
+  <?php endforeach; ?>
 </body>
 </html>

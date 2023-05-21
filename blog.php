@@ -8,6 +8,10 @@
 </head>
 <body>
   <?php
+
+
+  require "utilities.php";
+
   // Get an array of file paths matching the pattern
   $filePaths = glob('posts/*.json');
 
@@ -53,32 +57,81 @@
     array_push($articles, $article);
   }
 
-  //Rearranging array by date
-  usort($articles, function($a, $b) {
-    if ($a["dateFormatted"] == $b["dateFormatted"]) {
-      return 0;
-    } elseif ($a["dateFormatted"] < $b["dateFormatted"]) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
-
-  //Looping through articles to display them
-  foreach ($articles as $article) {
-    $filename = $article["filename"];
-    $title = $article["title"];
-    $dateFormatted = $article["dateFormatted"];
-    $contentNew = $article["contentNew"];
-    $imgurl = $article["imgurl"];
-    ?>
-    <h1><a href="post.php?article=<?php echo $filename; ?>"><?php echo $title; ?></a></h1>
-    <time datetime="<?php echo $dateFormatted; ?>"><?php echo $dateFormatted; ?></time>
-    <p><?php echo $contentNew; ?></p>
-    <img src="<?php echo $imgurl; ?>" alt="news Image" width="500px">
-    <hr>
-  <?php
+  //Rearranging array by date ascending
+  function sortDateAscending($articles) {
+    usort($articles, function($a, $b) {
+      if ($a["dateFormatted"] == $b["dateFormatted"]) {
+        return 0;
+      } elseif ($a["dateFormatted"] < $b["dateFormatted"]) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    return $articles;
   }
+
+  //Rearranging array by date descending
+  function sortDateDescending($articles) {
+    usort($articles, function($a, $b) {
+      if ($a["dateFormatted"] == $b["dateFormatted"]) {
+        return 0;
+      } elseif ($a["dateFormatted"] < $b["dateFormatted"]) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    return $articles;
+  }
+
+  //Rearranging array by alphabetic ascending
+  function sortAlphabeticAscending($articles) {
+    usort($articles, function($a, $b) {
+      return strcmp($a["title"], $b["title"]);
+    });
+    return $articles;
+  }
+
+  //Rearranging array by alphabetic descending
+  function sortAlphabeticDescending($articles) {
+    usort($articles, function($a, $b) {
+      return strcmp($b["title"], $a["title"]);
+    });
+    return $articles;
+  }
+
+  // Default sort order is descending
+  $sortOrder = 'date-desc';
+
+  // Check if query is active
+  if (isset($_GET['sortOrder'])) {
+    $sortOrder = $_GET['sortOrder'];
+  }
+
+  // Sort articles based on sort order
+switch ($sortOrder) {
+  case 'date-asc':
+    $articles = sortDateAscending($articles);
+    break;
+  case 'date-desc':
+    $articles = sortDateDescending($articles);
+    break;
+  case 'alpha-asc':
+    $articles = sortAlphabeticAscending($articles);
+    break;
+  case 'alpha-desc':
+    $articles = sortAlphabeticDescending($articles);
+    break;
+  default:
+    // Handle default case, sort by date descending
+    $articles = sortDateDescending($articles);
+    break;
+}
+
+  //Access to the view file
+  require "blog.view.php";
+
   ?>
 </body>
 </html>
