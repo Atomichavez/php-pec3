@@ -15,7 +15,10 @@ if($lang == 'en') {
     <ul>
       <li><a href="blog.php">Home</a></li>
       <li><a href="actividad_1.php">Activity 1</a></li>
-      <li><a href="">API</a></li>
+
+      <!-- <li><a href="/pec3/api/noticias/es/api.php">API</a></li> -->
+      <li><a href="/pec3/api/noticias/es/api.php">API</a></li>
+
       <?php if (!isset($_SESSION['username'])): ?>
         <li><a href="login.php">Login</a></li>
       <?php else: ?>
@@ -32,7 +35,7 @@ if($lang == 'en') {
   <ul>
     <li><a href="blog.php">Inicio</a></li>
     <li><a href="actividad_1.php">Actividad 1</a></li>
-    <li><a href="">API</a></li>
+    <li><a href="/pec3/api/noticias/es/api.php">API</a></li>
     <?php if (!isset($_SESSION['username'])): ?>
       <li><a href="login.php">Acceso</a></li>
     <?php else: ?>
